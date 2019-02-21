@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNA to RNA Conversion", "DNA to RNA Conversion\DNA to RNA Conversion.csproj", "{5094C458-9B39-40EF-9233-ED738FE9F9B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5094C458-9B39-40EF-9233-ED738FE9F9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5094C458-9B39-40EF-9233-ED738FE9F9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5094C458-9B39-40EF-9233-ED738FE9F9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5094C458-9B39-40EF-9233-ED738FE9F9B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE793142-46AB-403F-87B4-E328EDDC38F7}
+	EndGlobalSection
+EndGlobal
