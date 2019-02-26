@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParseALinkedListFromAString", "ParseALinkedListFromAString\ParseALinkedListFromAString.csproj", "{DA9150A7-4E7A-45E8-8E2F-4ED32C738FF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParseALinkedListFromAStringTests", "ParseALinkedListFromAStringTests\ParseALinkedListFromAStringTests.csproj", "{D8684488-25B4-4A71-BA50-1774AA9C0362}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA9150A7-4E7A-45E8-8E2F-4ED32C738FF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA9150A7-4E7A-45E8-8E2F-4ED32C738FF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA9150A7-4E7A-45E8-8E2F-4ED32C738FF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA9150A7-4E7A-45E8-8E2F-4ED32C738FF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8684488-25B4-4A71-BA50-1774AA9C0362}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8684488-25B4-4A71-BA50-1774AA9C0362}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8684488-25B4-4A71-BA50-1774AA9C0362}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8684488-25B4-4A71-BA50-1774AA9C0362}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3E654273-7C9C-49C0-8864-E3D22725DF7E}
+	EndGlobalSection
+EndGlobal
