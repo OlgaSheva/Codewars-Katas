@@ -12,18 +12,24 @@ namespace FunWithTreesIsPerfect
         {
             if (root == null)
                 return true;
-            
+
             if (root != null)
             {
                 if (root.right == null && root.left == null)
                     return true;
-                if (root.right != null && root.left != null)
+                if (CountChildren(root.left) != CountChildren(root.right))
                 {
-                    return IsPerfect(root.right) && IsPerfect(root.left);
+                    return false;
                 }
-            }
+            }            
 
-            return false;
+            return IsPerfect(root.right) && IsPerfect(root.left);
+        }
+
+        public static int CountChildren(TreeNode root)
+        {
+            if (root == null) return 0;
+            return 1 + TreeNode.CountChildren(root.left) + TreeNode.CountChildren(root.right);
         }
 
         public static TreeNode Leaf()
