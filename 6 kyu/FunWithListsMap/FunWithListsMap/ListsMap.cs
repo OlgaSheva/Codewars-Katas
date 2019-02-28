@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace FunWithListsMap
 {
@@ -30,16 +29,31 @@ namespace FunWithListsMap
                 return null;
 
             Node<T2> newList = null;
+            newList = new Node<T2>(f(head.data), null);
 
-            newList = new Node<T2>(f(head.data));
             while (head.next != null)
-            {
-                head = head.next;                
-                newList.next = new Node<T2>(f(head.data));
-                newList = newList.next;
+            {                
+                head = head.next;
+                newList = new Node<T2>(f(head.data), newList);
+                
             }
 
+            newList = ReverseList(newList);
+
             return newList;
+        }
+
+        public static Node<T> ReverseList<T>(Node<T> node)
+        {
+            Node<T> head = null;
+
+            while (node != null)
+            {
+                head = new Node<T>(node.data, head);
+                node = node.next;
+            }
+
+            return head;
         }
     }
 
@@ -48,7 +62,23 @@ namespace FunWithListsMap
         public static void Main(string[] args)
         {
             Node<int> node = Kata.Map<int, int>(new Node<int>(1, new Node<int>(2, new Node<int>(3))), n => n);
-            Console.WriteLine(node);
+            string s = Stringify(node);
+            Console.WriteLine(s);
+        }
+
+        public static string Stringify(Node<int> list)
+        {
+            string stringList = "";
+
+            while (list != null)
+            {
+                stringList += list.data + " -> ";
+                list = list.next;
+            }
+            stringList += "null";
+
+
+            return stringList;
         }
     }
 }

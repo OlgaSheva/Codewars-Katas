@@ -18,9 +18,7 @@ namespace FunWithTreesIsPerfect
                 if (root.right == null && root.left == null)
                     return true;
                 if (CountChildren(root.left) != CountChildren(root.right))
-                {
                     return false;
-                }
             }            
 
             return IsPerfect(root.right) && IsPerfect(root.left);
