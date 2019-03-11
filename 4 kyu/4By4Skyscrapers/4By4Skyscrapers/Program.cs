@@ -1,30 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace _4By4Skyscrapers
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var clues = new[]{  0, 0, 1, 2,
-                                0, 2, 0, 0,
-                                0, 3, 0, 0,
-                                0, 1, 0, 0};
-
-            var expected = new[]{ new []{2, 1, 4, 3},
-                                  new []{3, 4, 1, 2},
-                                  new []{4, 2, 3, 1},
-                                  new []{1, 3, 2, 4}};
-
-            Skyscrapers skyscrapers = new Skyscrapers();
-            //var actual = skyscrapers.SolvePuzzle(clues);
-
-
-        }
-    }
-
+{   
     public class Skyscrapers
     {
         public static int[][] SolvePuzzle(int[] clues)
@@ -46,37 +23,48 @@ namespace _4By4Skyscrapers
             BuildSkyscrapers4IfClues1(list, clues);
             BuildSkyscrapers1234IfClues4(list, clues);
 
+            // set 4 if clues 2 and 3
+            BuildSkyscrapers4IfCluesElement2And3(list, clues);
             RemoveRepeatedInRowsAndColumnsSkyscrapers(list);
 
             // set 4 if clues 2
-            BuildSkyscrapers4IfCluesElement2(list, clues);            
-            RemoveRepeatedInRowsAndColumnsSkyscrapers(list);
-
-            CheckThePresenceOfASkyscraperInThreeRowsOrThreeColumns(list);
-            RemoveRepeatedInRowsAndColumnsSkyscrapers(list);
-
+            BuildSkyscrapers4IfCluesElement2(list, clues);      
+            
             // remove 1 if clues 2
             RemoveSkyscrapers1IfCluesElement2(list, clues);
 
+            // remove 4 if clues 2 or 3
+            RemoveSkyscrapers4IfCluesElement2Or3(list, clues);
+
+            CheckThePresenceOfASkyscraperInThreeRowsOrThreeColumns(list);
+
             // set 3 if clues 2
             BuildSkyscrapers3IfCluesElement2(list, clues);
+
+            CheckThePresenceOfASkyscraperInThreeRowsOrThreeColumns(list);
             RemoveRepeatedInRowsAndColumnsSkyscrapers(list);
 
             // set 1 if clues 2
             BuildSkyscrapers1IfCluesElement2(list, clues);            
             RemoveRepeatedInRowsAndColumnsSkyscrapers(list);
+            RemoveRepeatedInRowsAndColumnsSkyscrapers(list);
             CheckThePresenceOfASkyscraperInThreeRowsOrThreeColumns(list);
 
-            // set 3 and 2 or 2 and 1 if clues 3
-            BuildSkyscrapers3And2Or2And1IfCluesElement3(list, clues);
+            // set 3 and 2 if clues 3
+            BuildSkyscrapers3And2IfCluesElement3(list, clues);
             RemoveRepeatedInRowsAndColumnsSkyscrapers(list);
-            //CheckThePresenceOfASkyscraperInThreeRowsOrThreeColumns(list);
+
+            // set 2 and 1 if clues 3
+            BuildSkyscrapers2And1IfCluesElement3(list, clues);
+            RemoveRepeatedInRowsAndColumnsSkyscrapers(list);
+
+            CheckThePresenceOfASkyscraperInThreeRowsOrThreeColumns(list);
             RemoveRepeatedInRowsAndColumnsSkyscrapers(list);
 
             for (int i = 0; i < 4; i++)
                 for (int j = 0; j < 4; j++)
                 {
-                    int s = list[i,j][0];
+                    int s = list[i, j][0];
                     actual[i][j] = s;
                 }
 
@@ -209,6 +197,36 @@ namespace _4By4Skyscrapers
             }
         }
 
+        public static void BuildSkyscrapers4IfCluesElement2And3(List<int>[,] list, int[] clues)
+        {
+            for (int i = 0; i < clues.Length; i++)
+            {
+                if (clues[i] == 2)
+                {
+                    if (i < 4)
+                    {
+                        if (clues[11 - i] == 3)
+                            list[1, i] = new List<int> { 4 };
+                    }
+                    else if (i >= 4 && i < 8)
+                    {
+                        if (clues[15 - i + 4] == 3)                        
+                            list[i - 4, 2] = new List<int> { 4 };
+                    }
+                    else if (i >= 8 && i < 12)
+                    {
+                        if (clues[11 - i] == 3)
+                            list[2, 11 - i] = new List<int> { 4 };
+                    }
+                    else if (i >= 12 && i <= 15)
+                    {
+                        if (clues[15 - i + 4] == 3)
+                            list[15 - i, 1] = new List<int> { 4 };
+                    }
+                }
+            }
+        }
+
         public static void RemoveSkyscrapers1IfCluesElement2(List<int>[,] list, int[] clues)
         {
             for (int i = 0; i < clues.Length; i++)
@@ -217,27 +235,81 @@ namespace _4By4Skyscrapers
                 {
                     if (i < 4)
                     {
-                        if (list[0, i].Contains(1) && (list[2, i].Contains(4) || list[3, i].Contains(4)))
+                        if (list[0, i].Contains(1) 
+                            && ((list[2, i].Contains(4) && list[2, i].Count == 1) 
+                                || (list[3, i].Contains(4) && list[3, i].Count == 1)))
                             list[0, i].Remove(1);
                     }
                     else if (i >= 4 && i < 8)
                     {
-                        if (list[i - 4, 3].Contains(1) && (list[i - 4, 1].Contains(4) || list[i - 4, 0].Contains(4)))
+                        if (list[i - 4, 3].Contains(1) 
+                            && ((list[i - 4, 1].Contains(4) && list[i - 4, 1].Count == 1)
+                                || (list[i - 4, 0].Contains(4) && list[i - 4, 0].Count == 1)))
                             list[i - 4, 3].Remove(1);
                     }
                     else if (i >= 8 && i < 12)
                     {
-                        if (list[3, 11 - i].Contains(1) && (list[1, 11 - i].Contains(4) || list[0, 11 - i].Contains(4)))
+                        if (list[3, 11 - i].Contains(1) 
+                            && ((list[1, 11 - i].Contains(4) && list[1, 11 - i].Count == 1)
+                                || (list[0, 11 - i].Contains(4) && list[0, 11 - i].Count == 1)))
                             list[3, 11 - i].Remove(1);
                     }
                     else if (i >= 12 && i <= 15)
                     {
-                        if (list[15 - i, 0].Contains(1) && (list[15 - i, 2].Contains(4) || list[15 - i, 3].Contains(4)))
+                        if (list[15 - i, 0].Contains(1) 
+                            && ((list[15 - i, 2].Contains(4) && list[15 - i, 2].Count == 1)
+                                || (list[15 - i, 3].Contains(4) && list[15 - i, 3].Count == 1)))
                             list[15 - i, 0].Remove(1);
                     }
                 }
             }
-        }            
+        }
+
+        public static void RemoveSkyscrapers4IfCluesElement2Or3(List<int>[,] list, int[] clues)
+        {
+            for (int i = 0; i < clues.Length; i++)
+            {
+                if (clues[i] == 2 || clues[i] == 3)
+                {
+                    if (i < 4)
+                    {
+                        if (list[0, i].Contains(4) && list[0, i].Count != 1)
+                        {
+                            list[0, i].Remove(4);
+                            if (clues[i] == 3)
+                                list[1, i].Remove(4);
+                        }
+                    }
+                    else if (i >= 4 && i < 8)
+                    {
+                        if (list[i - 4, 3].Contains(4) && list[i - 4, 3].Count != 1)
+                        {
+                            list[i - 4, 3].Remove(4);
+                            if (clues[i] == 3)
+                                list[i - 4, 2].Remove(4);
+                        }
+                    }
+                    else if (i >= 8 && i < 12)
+                    {
+                        if (list[3, 11 - i].Contains(4) && list[3, 11 - i].Count != 1)
+                        {
+                            list[3, 11 - i].Remove(4);
+                            if (clues[i] == 3)
+                                list[2, 11 - i].Remove(4);
+                        }
+                    }
+                    else if (i >= 12 && i <= 15)
+                    {
+                        if (list[15 - i, 0].Contains(4) && list[15 - i, 0].Count != 1)
+                        {
+                            list[15 - i, 0].Remove(4);
+                            if (clues[i] == 3)
+                                list[15 - i, 1].Remove(4);
+                        }
+                    }
+                }
+            }
+        }
 
         public static void BuildSkyscrapers3IfCluesElement2(List<int>[,] list, int[] clues)
         {
@@ -303,7 +375,7 @@ namespace _4By4Skyscrapers
             }
         }
 
-        public static void BuildSkyscrapers3And2Or2And1IfCluesElement3(List<int>[,] list, int[] clues)
+        public static void BuildSkyscrapers3And2IfCluesElement3(List<int>[,] list, int[] clues)
         {
             for (int i = 0; i < clues.Length; i++)
             {
@@ -377,6 +449,57 @@ namespace _4By4Skyscrapers
             }
         }
 
+        public static void BuildSkyscrapers2And1IfCluesElement3(List<int>[,] list, int[] clues)
+        {
+            for (int i = 0; i < clues.Length; i++)
+            {
+                if (clues[i] == 3)
+                {
+                    if (i < 4)
+                    {
+                        if ((list[2, i].Contains(4) && list[2, i].Count == 1)
+                            && (list[1, i].Contains(1) && list[1, i].Contains(2) && list[1, i].Count == 2)
+                            && (list[0, i].Contains(1) && list[0, i].Contains(2) && list[0, i].Count == 2))
+                        {
+                            list[1, i] = new List<int> { 2 };
+                            list[0, i] = new List<int> { 1 };
+                        }
+                    }
+                    else if (i >= 4 && i < 8)
+                    {
+                        if ((list[i - 4, 1].Contains(4) && list[i - 4, 1].Count == 1)
+                            && (list[i - 4, 2].Contains(1) && list[i - 4, 2].Contains(2) && list[i - 4, 2].Count == 2)
+                            && (list[i - 4, 3].Contains(1) && list[i - 4, 3].Contains(2) && list[i - 4, 3].Count == 2))
+                        {
+                            list[i - 4, 3] = new List<int> { 1 };
+                            list[i - 4, 2] = new List<int> { 2 };
+                        }
+                    }
+                    else if (i >= 8 && i < 12)
+                    {
+                        if ((list[1, 11 - i].Contains(4) && list[1, 11 - i].Count == 1)
+                            && (list[2, 11 - i].Contains(1) && list[2, 11 - i].Contains(2) && list[2, 11 - i].Count == 2)
+                            && (list[3, 11 - i].Contains(1) && list[3, 11 - i].Contains(2) && list[1, 11 - i].Count == 2))
+                        {
+                            list[2, 11 - i] = new List<int> { 2 };
+                            list[3, 11 - i] = new List<int> { 1 };
+                        }
+                    }
+                    else if (i >= 12 && i <= 15)
+                    {
+                        if ((list[15 - i, 2].Contains(4) && list[15 - i, 2].Count == 1)
+                            && (list[15 - i, 1].Contains(1) && list[15 - i, 1].Contains(2) && list[15 - i, 1].Count == 2)
+                            && (list[15 - i, 0].Contains(1) && list[15 - i, 0].Contains(2) && list[15 - i, 2].Count == 2))
+                        {
+                            list[15 - i, 1] = new List<int> { 2 };
+                            list[15 - i, 0] = new List<int> { 1 };
+                        }
+                    }
+                }
+            }
+        }
+
+
         public static void RemoveRepeatedInRowsAndColumnsSkyscrapers(List<int>[,] list)
         {
             // skyscrapers
@@ -407,7 +530,6 @@ namespace _4By4Skyscrapers
             }
         }
 
-        // check the presence of a skyscraper in three rows or three columns
         public static void CheckThePresenceOfASkyscraperInThreeRowsOrThreeColumns(List<int>[,] list)
         {
             int X, Y;
@@ -419,7 +541,7 @@ namespace _4By4Skyscrapers
                 for (int i = 0; i < 4; i++)
                 {
                     for (int j = 0; j < 4; j++) {
-                        if (list[i, j].Count == 1 && list[i, j].Contains(sky))
+                        if (list[i, j].Count == 1 && list[i, j][0] == sky)
                         {
                             count++;
                         }
@@ -434,7 +556,5 @@ namespace _4By4Skyscrapers
                     list[X, Y] = new List<int> { sky };                    
             }
         }
-
-    }
-    
+    }    
 }
