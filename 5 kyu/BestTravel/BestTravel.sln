@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestTravel", "BestTravel\BestTravel.csproj", "{A8F15C46-EBB6-489F-9713-935932EADDBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestTravelTests", "BestTravelTests\BestTravelTests.csproj", "{940CA0D7-22E9-41CA-8FAB-868BB1A4CFBB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8F15C46-EBB6-489F-9713-935932EADDBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8F15C46-EBB6-489F-9713-935932EADDBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8F15C46-EBB6-489F-9713-935932EADDBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8F15C46-EBB6-489F-9713-935932EADDBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{940CA0D7-22E9-41CA-8FAB-868BB1A4CFBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{940CA0D7-22E9-41CA-8FAB-868BB1A4CFBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{940CA0D7-22E9-41CA-8FAB-868BB1A4CFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{940CA0D7-22E9-41CA-8FAB-868BB1A4CFBB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {67727162-FC08-404C-9CDF-ADEF66E05B9D}
+	EndGlobalSection
+EndGlobal
