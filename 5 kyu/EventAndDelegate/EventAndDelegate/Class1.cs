@@ -3,24 +3,43 @@ using System.Collections.Generic;
 
 namespace EventAndDelegate
 {
-    public delegate string TextMessageSend(string name);
+    public class Program
+    {
+        public static void Main()
+        {
+            List<string> peopleList = new List<string>()
+            {
+                "Peter", "Mike", "Peter", "Bob", "Peter", "Peter", "Bob", "Mike",
+                "Bob", "Peter", "Peter", "Mike", "Bob"
+            };
+            Publisher publisher = new Publisher();
+            publisher.ContactNotify += TextMessageSend.Send;
+            publisher.CountMessages(peopleList);
+            string expected = "Peter, Bob, Peter, Mike";
+
+            Console.ReadKey();
+        }
+    }
+
+    // send text message
+    public class TextMessageSend
+    {
+        public static void Send(object source, PersonEventArgs e)
+        {
+            Console.WriteLine(e.Name);
+        }
+    }
+
+
 
     public class PersonEventArgs : EventArgs
     {
-        // implement cusotm event handler wiht Name property (string)
-               
-        public string Name { get; set; }
-
-        public string ContactNotify(string name)
-        {
-            this.Name = name;
-            return Name;
-        }        
+        public string Name { get; set; }     
     }
 
     public class Publisher
     {
-        public event TextMessageSend ContactNotify;
+        public event EventHandler<PersonEventArgs> ContactNotify;
 
         Dictionary<string, int> dic = new Dictionary<string, int>();
         int i = 0;
@@ -30,19 +49,36 @@ namespace EventAndDelegate
             foreach (string person in peopleList)
             {
                 // implement your logic to send name of people after apearing 3*n times
-                foreach (string name in dic.Keys)
+                if (!dic.ContainsKey(person))
                 {
-                    if (person == name)
+                    dic.Add(person, 1);
+                }
+                else
+                {
+                    foreach (string name in dic.Keys)
                     {
-                        dic.ContainsKey(person);
-                    }
-                    else
-                    {
-                        dic.Add(person, 1);
+                        if (person == name)
+                        {
+                            dic[name] += 1;
+                            if (dic[name] % 3 == 0)
+                            {
+                                PersonEventArgs p = new PersonEventArgs();
+                                p.Name = person;
+                                OnContactNotify(p); // Notify subscribers
+                            }
+                            break;
+                        }                        
                     }
                 }
+            }
+        }
 
-                OnContactNotify(person); // Notify subscribers
+        protected virtual void OnContactNotify(PersonEventArgs e)
+        {
+            EventHandler<PersonEventArgs> sender = ContactNotify;
+            if (sender != null)
+            {
+                sender(this, e);
             }
         }
     }
