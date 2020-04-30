@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
@@ -16,50 +14,19 @@ namespace ConsoleApp1
             string actual = Decode(input);
             Console.WriteLine(input);
             Console.WriteLine(actual);
+            Console.WriteLine(actual.ToUpper() == expected);
             Console.ReadKey();
         }
 
         public static string Decode(string morseCode)
         {
-            morseCode.Trim();
-            var oneSymbol = new StringBuilder();
-            var result = new StringBuilder();
-            int spaceCount = 0;
-
-            foreach (var symbol in morseCode)
-            {
-                if (symbol != ' ')
-                {
-                    oneSymbol.Append(symbol);
-                    spaceCount = 0;
-                }
-                else
-                {
-                    AddSymbol(oneSymbol, result);
-
-                    spaceCount++;
-                    if (spaceCount == 3)
-                    {
-                        result.Append(' ');
-                        spaceCount = 0;
-                    }
-                }
-            }
-
-            AddSymbol(oneSymbol, result);
-
-            return result.ToString().Trim();
+            var chars = morseCode
+                        .Trim()
+                        .Replace("   ", " W ")
+                        .Split(' ')
+                        .Select(word => word == "W" ? " " : MorseCode.Get(word));
+            return string.Join("", chars);
         }
-
-        private static void AddSymbol(StringBuilder oneSymbol, StringBuilder result)
-        {
-            if (oneSymbol.Length > 0)
-            {
-                result.Append(MorseCode.Get(oneSymbol.ToString()));
-                oneSymbol.Clear();
-            }
-        }
-
     }
 
     public static class MorseCode
@@ -104,9 +71,9 @@ namespace ConsoleApp1
                                        {'9', "----."}
                                    };
 
-        public static char Get(string s)
+        public static string Get(string s)
         {
-            return morseAlphabet.FirstOrDefault(x => x.Value == s).Key;
+            return morseAlphabet.FirstOrDefault(x => x.Value == s).Key.ToString();
         }
     }
 }
